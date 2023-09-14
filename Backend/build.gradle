@@ -1,0 +1,50 @@
+plugins {
+  id 'java'
+  id 'war'
+}
+
+group 'kr.co'
+version '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+ext {
+  junitVersion = '5.9.2'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+dependencies {
+  compileOnly('javax.servlet:javax.servlet-api:4.0.1')
+
+  testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+  implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.1.0'
+  compileOnly group: 'javax.servlet.jsp', name: 'jsp-api', version: '2.2'
+  implementation group: 'com.alibaba', name: 'fastjson', version: '2.0.40'
+
+  implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+  runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+  runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+  implementation 'com.squareup.okhttp3:okhttp:4.9.1' // chat gpt api request
+}
+
+test {
+  useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+war {
+  archiveFileName = 'Backend.war' // 확장자 .war 포함
+}
